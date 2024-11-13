@@ -1,50 +1,28 @@
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import Home from "../screens/Home";
 import Sobre from "../screens/Sobre";
 import Contato from "../screens/Contato";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Feather from "react-native-vector-icons/Feather";
-
-const Tab = createBottomTabNavigator();
+import CustomDrawer from "../components/CustomDrawer";
 
 export default function Routes() {
+  const Drawer = createDrawerNavigator();
   return (
-    <Tab.Navigator
+    <Drawer.Navigator
+       drawerContent={CustomDrawer} 
       screenOptions={{
-        headerShown: false,
-        tabBarActiveTintColor: "green",
-        tabBarInactiveTintColor: "red",
-        tabBarActiveBackgroundColor: "gray",
-        tabBarInactiveBackgroundColor: "yellow",
-        tabBarShowLabel: true,
+        drawerActiveBackgroundColor: "#0099",
+        drawerInactiveBackgroundColor: "yellow",
+        drawerActiveTintColor: "green",
+        drawerInactiveTintColor: "red",
+        drawerStyle: {
+          backgroundColor: "#d9d9d9",
+          width: 250,
+        },
       }}
     >
-      <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarIcon: ({ color, size }) => {
-            return <Feather name="home" color={color} size={size} />;
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Sobre"
-        component={Sobre}
-        options={{
-          tabBarIcon: ({ color, size }) => {
-            return <Feather name="file-text" color={color} size={size} />;
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Contato"
-        component={Contato}
-        options={{
-          tabBarIcon: ({ color, size }) => {
-            return <Feather name="phone-call" color={color} size={size} />;
-          },
-        }}
-      />
-    </Tab.Navigator>
+      <Drawer.Screen name="Home" component={Home} />
+      <Drawer.Screen name="Sobre" component={Sobre} />
+      <Drawer.Screen name="Contato" component={Contato} />
+    </Drawer.Navigator>
   );
 }

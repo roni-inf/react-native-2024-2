@@ -12,6 +12,8 @@ export default function Home() {
     <View style={styles.container}>
       <Text>Home</Text>
       <Button title="Sobre" onPress={navigationSobre}></Button>
+      <Text>Abrir Drawer</Text>
+      <Button title="Drawer" onPress={() => navigation.jumpTo("Home")} />
     </View>
   );
 }
