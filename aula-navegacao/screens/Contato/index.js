@@ -1,14 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 export default function Contato() {
   return (
     <View style={styles.container}>
-      <Text>index</Text>
+      <Text>Tela de Contato Tab </Text>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

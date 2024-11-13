@@ -1,25 +1,12 @@
-import { View, Button, Text, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
-export default function Sobre({ route }) {
-  const navigation = useNavigation();
+export default function Sobre() {
   return (
     <View style={styles.container}>
       <Text>Tela de Sobre</Text>
-      <Text>{route.params?.nome ?? "nome não inserido"}</Text>
-      <Text>{route.params?.email ?? "email não informado"}</Text>
-      <Text>
-        {route.params?.nome} {route.params?.email}
-      </Text>
-      <Button
-        title="Contato"
-        onPress={() => navigation.navigate("Contato")}
-      ></Button>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
