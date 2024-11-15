@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   StatusBar,
   View,
@@ -10,15 +10,17 @@ import {
   Keyboard,
 } from "react-native";
 import api from "./service/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App() {
   const [cep, setCep] = useState("");
-  const [cepUser, setCepUser] = useState({});
+  const [cepUser, setCepUser] = useState("");
   const inputRef = useRef();
 
   const limpar = () => {
     setCep("");
     inputRef.current.focus();
+    setCepUser("");
   };
 
   const buscar = async () => {
@@ -30,15 +32,24 @@ export default function App() {
     try {
       const response = await api.get(`/${cep}/json`);
       if (response.data.erro) {
-        setCepUser({});
+        setCepUser("");
         Alert.alert("Cep não encontrado!");
-         Keyboard.dismiss();
+        Keyboard.dismiss();
       }
+      await AsyncStorage.setItem("@lastcep", cep);
       setCepUser(response.data);
     } catch (error) {
       console.log("Error" + error);
     }
   };
+
+  useEffect(() => {
+    async function loadData() {
+      const dadoCep = await AsyncStorage.getItem("@lastcep");
+      setCep(dadoCep);
+    }
+    loadData();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -70,13 +81,15 @@ export default function App() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.resultado}>
-        <Text style={styles.itemText}>Cep:{cepUser.cep}</Text>
-        <Text style={styles.itemText}>Rua:{cepUser.logradouro}</Text>
-        <Text style={styles.itemText}>Cidade:{cepUser.localidade}</Text>
-        <Text style={styles.itemText}>Bairro:{cepUser.bairro}</Text>
-        <Text style={styles.itemText}>UF:{cepUser.uf}</Text>
-      </View>
+      {cepUser ? (
+        <View style={styles.resultado}>
+          <Text style={styles.itemText}>Cep:{cepUser.cep}</Text>
+          <Text style={styles.itemText}>Rua:{cepUser.logradouro}</Text>
+          <Text style={styles.itemText}>Cidade:{cepUser.localidade}</Text>
+          <Text style={styles.itemText}>Bairro:{cepUser.bairro}</Text>
+          <Text style={styles.itemText}>UF:{cepUser.uf}</Text>
+        </View>
+      ) : null}
     </View>
   );
 }
