@@ -1,0 +1,11 @@
+"use strict";
+let matricula;
+let preco;
+let logado = true;
+let situacao = 0;
+logado = Boolean(situacao);
+console.log("Logado:" + logado);
+matricula = 123;
+matricula = "234";
+console.log(matricula);
+console.log(typeof matricula);
